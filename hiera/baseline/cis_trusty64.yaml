@@ -18,6 +18,14 @@ trusty64:
         cis_1_5_2: true
         cis_1_5_3: true
         cis_1_5_4: true
+        cis_1_7_1_1: true
+        cis_1_7_1_2: true
+        cis_1_7_1_3: true
+        cis_1_7_1_4: true
+        cis_1_7_1_5: true
+        cis_1_7_1_6: true
+        cis_1_7_2: true
+        cis_1_8: true
         cis_2_1_1: true
         cis_2_1_2: true
         cis_2_1_3: true
