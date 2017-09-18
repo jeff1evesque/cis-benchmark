@@ -29,12 +29,6 @@ Vagrant.configure(2) do |config|
     exec "vagrant #{ARGV.join(' ')}"
   end
 
-  ## ensure puppet modules directory on the host before 'vagrant up'
-  config.trigger.before :up do
-    run "mkdir -p puppet/environment/vagrant/modules"
-    run "mkdir -p puppet/environment/vagrant/modules_contrib"
-  end
-
  if ENV['TEST_ENV'] == 'Trusty64'
 
     atlas_repo  = 'jeff1evesque'
@@ -54,14 +48,5 @@ Vagrant.configure(2) do |config|
   ## increase RAM to ensure scrypt doesn't exhaust memory
   config.vm.provider 'virtualbox' do |v|
     v.customize ['modifyvm', :id, '--memory', '512']
-  end
-
-  ## Run r10k
-  config.r10k.puppet_dir      = "puppet/environment/vagrant"
-  config.r10k.puppetfile_path = "puppet/environment/vagrant/Puppetfile"
-
-  ## clean up files on the host after 'vagrant destroy'
-  config.trigger.after :destroy do
-    run 'rm -Rf puppet/environment/*/modules_contrib'
   end
 end
