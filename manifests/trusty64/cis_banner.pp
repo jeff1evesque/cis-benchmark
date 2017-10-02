@@ -33,6 +33,13 @@ class cis::trusty64::cis_banner {
 
   ## 1.7.1.1 Ensure message of the day is configured properly (Scored)
   if ($cis_1_7_1_1) {
+    file { '/etc/motd':
+      ensure  => present,
+      mode    => '0444',
+      owner   => 'root',
+      group   => 'root',
+      content => dos2unix(template('cis/trusty64/motd.erb')),
+    }
   }
 
   ## 1.7.1.2 Ensure local login warning banner is configured properly (Not Scored)
