@@ -44,10 +44,24 @@ class cis::trusty64::cis_banner {
 
   ## 1.7.1.2 Ensure local login warning banner is configured properly (Not Scored)
   if ($cis_1_7_1_2) {
+    file { '/etc/issue':
+      ensure  => present,
+      mode    => '0444',
+      owner   => 'root',
+      group   => 'root',
+      content => dos2unix(template('cis/trusty64/issues.erb')),
+    }
   }
 
   ## 1.7.1.3 Ensure remote login warning banner is configured properly (Not Scored)
   if ($cis_1_7_1_3) {
+    file { '/etc/issue.net':
+      ensure  => present,
+      mode    => '0444',
+      owner   => 'root',
+      group   => 'root',
+      content => dos2unix(template('cis/trusty64/issues.erb')),
+    }
   }
 
   ## 1.7.1.4 Ensure permissions on /etc/motd are configured (Not Scored)
