@@ -144,5 +144,16 @@ class cis::trusty64::cis_banner {
 
   ## 1.8 Ensure updates, patches, and additional security software are installed (Not Scored)
   if ($cis_1_8) {
+    exec { 'apt-get-update':
+      command     => 'apt-get -y update',
+      path        => '/usr/bin',
+      notify      => Exec['apt-get-upgrade'],
+    }
+
+    exec { 'apt-get-upgrade':
+      command     => 'apt-get -y upgrades',
+      path        => '/usr/bin',
+      refreshonly => true,
+    }
   }
 }
