@@ -111,6 +111,35 @@ class cis::trusty64::cis_banner {
 
   ## 1.7.2 Ensure GDM login banner is configured (Scored)
   if ($cis_1_7_2) {
+    package { 'gdm':
+      ensure      => present,
+    }
+
+    file { '/etc/dconf/profile/gdm':
+      ensure      => present,
+      mode        => '0644',
+      owner       => 'root',
+      group       => 'root',
+      content     => dos2unix(template('cis/trusty64/issues.erb')),
+      require     => Package['gdm'],
+      notify      => Exec['update-system-database'],
+    }
+
+    file { '/etc/dconf/db/gdm.d/01-banner-message':
+      ensure      => present,
+      mode        => '0644',
+      owner       => 'root',
+      group       => 'root',
+      content     => dos2unix(template('cis/trusty64/issues.erb')),
+      require     => Package['gdm'],
+      notify      => Exec['update-system-database'],
+    }
+
+    exec { 'update-system-database':
+      command     => 'dconf update',
+      path        => '/usr/bin',
+      refreshonly => true,
+    }
   }
 
   ## 1.8 Ensure updates, patches, and additional security software are installed (Not Scored)
